@@ -1,30 +1,29 @@
-MORSE_CODE = {
-  '.-' => 'A', '-...' => 'B', '-.-.' => 'C', '-..' => 'D',
-  '.' => 'E', '..-.' => 'F', '--.' => 'G', '....' => 'H',
-  '..' => 'I', '.---' => 'J', '-.-' => 'K', '.-..' => 'L',
-  '--' => 'M', '-.' => 'N', '---' => 'O', '.--.' => 'P',
-  '--.-' => 'Q', '.-.' => 'R', '...' => 'S', '-' => 'T',
-  '..-' => 'U', '...-' => 'V', '.--' => 'W', '-..-' => 'X',
-  '-.--' => 'Y', '--..' => 'Z'
-}.freeze
-
-def decode_char(char)
-  MORSE_CODE[char]
+def decode_char(code)
+  decoder = { '.-' => 'A', '-...' => 'B', '-.-.' => 'C', '-..' => 'D', '.' => 'E', '..-.' => 'F', '--.' => 'G',
+              '....' => 'H', '..' => 'I', '.---' => 'J', '-.-' => 'K', '.-..' => 'L', '--' => 'M', '-.' => 'N',
+              '---' => 'O', '.--.' => 'P', '--.-' => 'Q', '.-.' => 'R', '...' => 'S', '-' => 'T', '..-' => 'U',
+              '...-' => 'V', '.--' => 'W', '-..-' => 'X', '-.--' => 'Y', '--..' => 'Z', '.----' => '1',
+              '..---' => '2', '...--' => '3', '....-' => '4', '.....' => '5', '-....' => '6', '--...' => '7',
+              '---..' => '8', '----.' => '9', '-----' => '0' }
+  decoder[code]
 end
 
-def decode_word(word)
-  arr = []
-  word.split.each do |morse_char|
-    arr.push(MORSE_CODE[morse_char])
-  end
-  arr.join
+puts decode_char('.-')
+
+def decode_word(code)
+  result = ''
+  arr = code.split
+  arr.each { |item| result += decode_char(item) }
+  result
 end
 
-def decode_message(morse_code)
-  morse_code
-    .split('   ')
-    .map do |word|
-      decode_word(word)
-    end
-    .join(' ')
+puts decode_word('-- -.--')
+
+def decode(code)
+  result = ''
+  arr = code.split('   ')
+  arr.each { |item| result += " #{decode_word(item)}" }
+  result.strip
 end
+
+puts decode('-- -.--   -. .- -- .')
